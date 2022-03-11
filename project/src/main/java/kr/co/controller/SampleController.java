@@ -7,14 +7,20 @@ import java.util.Arrays;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import kr.co.domain.SampleDTO;
 import kr.co.domain.SampleDTOList;
@@ -127,6 +133,48 @@ public class SampleController {
 		}
 		
 		
+		
+		@GetMapping("/ex08")
+		public @ResponseBody SampleDTO ex08() {
+			
+			logger.info("/ex08........");
+			SampleDTO dto = new SampleDTO();
+			dto.setAge(10);
+			dto.setName("홍길동");
+			return dto;
+		}
+		
+		@GetMapping("/ex09")
+public ResponseEntity<String> ex09() {
+			
+			logger.info("/ex09........");
+			
+			String msg="{\"name\" : \"홍길동\"}";
+			
+			HttpHeaders header = new HttpHeaders();
+			
+			header.add("Content-type", "application/json;charset=utf-8");
+			
+			return new ResponseEntity<>(msg,header, HttpStatus.OK);
+		}
+		
+		// exUpload.jsp를 실행하기 위한 용도 (화면을 실행)
+		@GetMapping("/exUpload")
+		public void exUpload() {
+			logger.info("/exUpload.....");
+			
+		}
+		// 파일 upload를 하기위한 용도 (서버)
+		
+		@PostMapping("/exUploadPost")
+		public void exUploadPost(ArrayList<MultipartFile> files) {
+			
+			files.forEach(file-> {
+				logger.info("=============");
+				logger.info("name : "+file.getOriginalFilename());
+				logger.info("size :"+file.getSize());
+			});
+		}
 }
 
 

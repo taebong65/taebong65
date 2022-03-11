@@ -21,8 +21,27 @@
 		<beans:property name="suffix" value=".jsp" />
 	</beans:bean>
 	
+	<beans:bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+			<!-- 이미지 파일 이름이 한글이 경우 깨지는 문제를 처리  -->
+			<beans:property name="defaultEncoding" value="utf-8"></beans:property>
+			<!-- 한 번의 Request 로 전달 될 수 있는 최대의 크기를 의미 -->
+			<beans:property name="maxUploadSize" value="104857560"></beans:property>
+			<!--  하나의 파일의 최대 크기를 의미 -->
+			<beans:property name="maxUploadSizePerFile" value="2097152"></beans:property>
+			<!--  이미지 저장경로 -->
+			<beans:property name="uploadTempDir" value="file:D:\upload\tmp"></beans:property>
+			<!--  메모리상에서 유지하는 최대의 크기를 의미  -->
+			<beans:property name="maxInMemorySize" value="10485756"></beans:property>
+	</beans:bean>
+	
+	
+	
+	
+	
 	<context:component-scan base-package="kr.co.controller" />
 	
-	
+	<context:component-scan base-package="kr.co.exception" />
 	
 </beans:beans>
+
+	
